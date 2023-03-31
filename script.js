@@ -594,6 +594,10 @@ const searchInput = getElement("#search");
 const btnContainer = getElement("#btn-container");
 const productContainer = getElement("#productslist-container");
 
+
+searchInput.addEventListener("input", (e) => {
+    filterProducts(e.target.value);  });
+
 console.log(searchInput);
 console.log(btnContainer);
 console.log(productContainer);
@@ -614,6 +618,9 @@ function getElement(identifier) {
 // Display list of products
 // Argument: An array of products
 function displayProducts(products) {
+    if (!products || products.length === 0) {
+        productContainer.innerHTML = "<h2 class='no-results'>No Results</h2>";
+    } else{
     const productList = products
     .map((product) => {
       const { title, price, brand, rating, thumbnail } = product;
@@ -639,14 +646,19 @@ function displayProducts(products) {
 
     productContainer.innerHTML = productList;
 }
-
+}
 // Create a category button
 // Argument: The category, represented in string format.
 function createBtn(category) {}
 
 // Handle input
 // Argument: a string representation of a category, used to compare against categories of products
-function filterProducts(value) {}
+function filterProducts(value) {
+    const filteredProducts = data.products.filter((product) => {
+        return product.category.includes(value);
+      });
+      displayProducts(filteredProducts);
+}
 
 
 // Display category buttons
